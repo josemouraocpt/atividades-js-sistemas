@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-be">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>VIACEP</title>
+        <script>
+            async function getCEP(cep){
+                const url = `https://viacep.com.br/ws/${cep}/json/`;
+                const response = await fetch(url);
+                const data = await response.json();
+                console.log(data);
+                resp.innerHTML = `
+                CEP: ${data.cep} <br>
+                Logradouro: ${data.logradouro} <br>
+                Bairro: ${data.bairro} <br>
+                Cidade: ${data.localidade} <br>
+                Estado: ${data.uf}
+                `
+            }
+        </script>
+    </head>
+    <body>
+        <h1>VIACEP</h1>
+        <h2>Buscar</h2>
+        <label for="cep">CEP: </label>
+        <input type="text" id="cep">
+        <button type="button" onclick="getCEP(cep.value)">Buscar</button>
+        <div id="resp"></div>
+    </body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Exercícios 11</title>
+        <script>
+           const url = "https://jsonplaceholder.typicode.com/posts";
+            async function getPostagem(){
+                const response = await fetch (url);
+                const data = await response.json()
+                console.log(data);
+            }
+
+            async function postPostagem(){
+                const response = await fetch (url, {
+                    method: "POST",
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8',
+                    },
+                    body: JSON.stringify({
+                        title: 'Nova Postagem',
+                        body: 'Essa é a minha mais nova postagem! :D',
+                        userId: 1,
+                    }),
+                })
+                const data = await response.json()
+                console.log(data);
+            }
+
+            async function putPostagem(id){
+                const response = await fetch (url+'/'+id, {
+                    method: "PUT",
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8',
+                    },
+                    body: JSON.stringify({
+                        id: 1,
+                        title: 'Atualizaão da nova Postagem',
+                        body: 'Essa é a minha atualização da minha mais nova postagem! :D',
+                        userId: 1,
+                    }),
+                })
+                const data = await response.json()
+                console.log(data);
+            }
+
+            async function patchPostagem(id){
+                const response = await fetch (url+'/'+id, {
+                    method: "PATCH",
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8',
+                    },
+                    body: JSON.stringify({
+                        title: 'Atualizção da nova Postagem usando o PATCH',
+                    }),
+                })
+                const data = await response.json()
+                console.log(data);
+            }
+
+            async function deletePostagem(id){
+                const response = await fetch (url+'/'+id, {
+                    method: 'DELETE',
+                });
+                console.log("deletado com sucesso");
+            }
+
+            async function filtrarPostagem(id){
+                const response = await fetch (url+'/'+id);
+                const data = await response.json()
+                console.log(data);
+            }
+    </script>
+    </head>
+    <body>
+        <h1>Postagens</h1>
+        <h2>Ler postagens</h2>
+        <button type="button" onclick="getPostagem()">Buscar</button>
+        <div id="resposta"></div>
+
+        <h2>Criar Postagem</h2>
+        <button type="button" onclick="postPostagem()">Postar</button>
+        <div id="resposta"></div>
+
+        <h2>Atualizar</h2>
+        <button type="button" onclick="putPostagem(1)">Atualizar</button>
+        <div id="resposta"></div>
+
+        <h2>Modificar</h2>
+        <button type="button" onclick="patchPostagem(1)">Modificar</button>
+        <div id="resposta"></div>
+
+        <h2>Remover</h2>
+        <button type="button" onclick="deletePostagem(1)">Remover</button>
+
+        <h2>Filtrar Postagens</h2>
+        <button type="button" onclick="filtrarPostagem(1)">Filtrar</button>
+        <div id="resposta"></div>
+
+    </body>
+</html>

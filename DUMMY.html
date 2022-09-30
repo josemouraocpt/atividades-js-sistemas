@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>DummyJSON</title>
+        <script>
+            const urlBase = 'https://dummyjson.com/products';
+            async function getProducts(){
+                const res = await fetch(urlBase);
+                const data = await res.json();
+                console.log(data);
+            }
+
+            async function getProductsByID(id){
+                const res = await fetch(`${urlBase}/${id}`);
+                const data = await res.json();
+                console.log(data);
+            }
+
+            async function getProductsBySearch(pesquisa){
+                const res = await fetch(`${urlBase}/search?q=${pesquisa}`);
+                const data = await res.json();
+                console.log(data);
+            }
+
+            async function LimitAndSkip(limit, skip){
+                const res = await fetch(`${urlBase}?limit=${limit}&skip=${skip}&select=tile,price`);
+                const data = await res.json();
+                console.log(data);
+            }
+
+            async function getAllCategories(){
+                const res = await fetch(`${urlBase}/categories`);
+                const data = await res.json();
+                console.log(data);
+            }
+
+            async function getProductsByCategory(category){
+                const res = await fetch(`${urlBase}/category/${category}`);
+                const data = await res.json();
+                console.log(data);
+            }
+
+            async function addNewProduct(){
+                const res = await fetch(`${urlBase}/add`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        title: 'BMW Pencil',
+                    })
+                });
+                const data = await res.json();
+                console.log(data);
+            }
+
+            async function UpdateProduct(id){
+                const res = await fetch(`${urlBase}/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        title: 'iPhone Galaxy +1',
+                    })
+                });
+                const data = await res.json();
+                console.log(data);
+            }
+
+            async function deleteProduct(id){
+                const res = await fetch(`${urlBase}/${id}`, {
+                    method: 'DELETE'
+                });
+                const data = await res.json();
+                console.log(data);
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Consulta Produtos</h1>
+
+        <h2>Todos os produtos</h2>
+        <button type="button" onclick="getProducts()">Pesquisar</button>
+
+        <h2>Produto por ID</h2>
+        <label for="idproduto">ID: </label>
+        <input type="number" id="idproduto" min="1" max="30">
+        <button type="button" onclick="getProductsByID(idproduto.value)">Buscar</button>
+    
+        <h2>Produto por Nome</h2>
+        <label for="nomeproduto">Nome: </label>
+        <input type="text" id="nomeproduto">
+        <button type="button" onclick="getProductsBySearch(nomeproduto.value)">Buscar</button>
+
+
+        <h2>Filtrar produtos</h2>
+        <label for="limiteprodutos">Quantidade de produtos: </label>
+        <input type="number" id="limiteprodutos">
+        <br>
+        <label for="quantidadeprodutos">A partir do produto: </label>
+        <input type="number" id="quantidadeprodutos">
+
+        <button type="button" onclick="LimitAndSkip(limiteprodutos.value, quantidadeprodutos.value)">Buscar</button>
+
+        <h2>Todos as categorias de produtos</h2>
+        <button type="button" onclick="getAllCategories()">Pesquisar</button>
+
+        <h2>Produtos por categoria</h2>
+        <label for="categoriaproduto">CATEGORIA: </label>
+        <input type="text" id="categoriaproduto">
+        <button type="button" onclick="getProductsByCategory(categoriaproduto.value)">Pesquisar</button>
+
+        <h2>Inserir produtos</h2>
+        <button type="button" onclick="addNewProduct()">Inserir</button>
+
+        <h2>Atualizar produtos</h2>
+        <label for="atua">ID: </label>
+        <input type="number" id="atu" min="1" max="30">
+        <button type="button" onclick="UpdateProduct(atu.value)">Atualizar</button>
+
+
+        <h2>Deletar produto</h2>
+        <label for="del">ID: </label>
+        <input type="number" id="del" min="1" max="30">
+        <button type="button" onclick="deleteProduct(del.value)">Deletar</button>
+    </body>
+</html>
