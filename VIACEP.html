@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>VIACEP</title>
         <script>
-            async function getCEP(cep){
+            async function getCEP(cep){ 
                 const url = `https://viacep.com.br/ws/${cep}/json/`;
                 const response = await fetch(url);
                 const data = await response.json();
@@ -19,14 +19,44 @@
                 Estado: ${data.uf}
                 `
             }
+            async function getCEPs(uf, cidade, rua){
+                const url = `https://viacep.com.br/ws/${uf}/${cidade}/${rua}/json/`;
+                const response = await fetch(url);
+                const data = await response.json();
+                console.log(data);
+                data.forEach(element => {
+                    resposta.innerHTML += `
+                    <div>
+                        <h2>${element.cep}</h2>
+                        Logradouro: ${element.logradouro} <br>
+                        Bairro: ${element.bairro} <br>
+                        Cidade: ${element.localidade} <br>
+                        Estado: ${element.uf}
+                    </div>
+                    `
+                });
+            }
         </script>
     </head>
     <body>
         <h1>VIACEP</h1>
-        <h2>Buscar</h2>
+        <h2>Buscar por CEP</h2>
         <label for="cep">CEP: </label>
         <input type="text" id="cep">
         <button type="button" onclick="getCEP(cep.value)">Buscar</button>
         <div id="resp"></div>
+
+        <h2>Buscar</h2>
+        <label for="estado">Estado: 
+            <input type="text" id="estado" placeholder="UF">
+        </label>
+        <label for="cidade">Cidade: 
+            <input type="text" id="cidade" placeholder="Ex: Belo Horizonte">
+        </label>
+        <label for="rua">Rua/Avenida: 
+            <input type="text" id="rua" placeholder="Ex: Cristiano Machado">
+        </label>
+        <button type="button" onclick="getCEPs(estado.value, cidade.value, rua.value)">Buscar</button>
+        <div id="resposta"></div>
     </body>
 </html>
